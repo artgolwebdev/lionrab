@@ -237,7 +237,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!ageVerify.checked) return;
 
         // Construct WhatsApp URL
-        const phone = '972526504348';
+        const phone = '972525486738';
         const rawMessage = `Hi! I'm interested in a tattoo.\nPlacement: ${formData.placement}\nSize: ${formData.size}\nName: ${formData.name}`;
         const encodedMessage = encodeURIComponent(rawMessage);
         const waUrl = `https://wa.me/${phone}?text=${encodedMessage}`;

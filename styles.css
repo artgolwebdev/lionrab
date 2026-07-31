@@ -369,12 +369,26 @@ video {
     /* Hero mobile adjustments */
     .hero-content {
         left: 1rem;
-        bottom: 8vh;
+        top: 15vh;
+        bottom: auto;
+        align-items: flex-start;
     }
 
     .hero-title-block {
         padding-left: 1rem;
         border-left-width: 2px;
+    }
+
+    .hero-subtitle {
+        font-size: 1.2rem;
+    }
+
+    .hero-title {
+        font-size: clamp(5rem, 25vw, 12rem);
+    }
+
+    .hero-tagline {
+        font-size: 1rem;
     }
 
     .hero-artist-img {
