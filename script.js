@@ -9,9 +9,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function updateHeroParallax() {
         const scrollY = window.scrollY || window.pageYOffset;
-        const maxTravel = isTouchDevice ? 42 : 120;
+        const maxTravel = isTouchDevice ? 70 : 120;
         const progress = Math.min(scrollY / window.innerHeight, 1);
-        const offset = Math.min(scrollY * (isTouchDevice ? 0.08 : 0.18), maxTravel);
+        const offset = Math.min(scrollY * (isTouchDevice ? 0.16 : 0.18), maxTravel);
         const opacity = Math.max(0, 1 - progress * 0.95);
 
         if (hero) {
@@ -19,8 +19,13 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         if (heroContent) {
+            const titleBlock = heroContent.querySelector('.hero-title-block');
             heroContent.style.transform = `translate3d(0, ${offset}px, 0)`;
             heroContent.style.opacity = opacity.toString();
+
+            if (titleBlock) {
+                titleBlock.style.transform = `translate3d(0, ${offset * (isTouchDevice ? 0.7 : 0.45)}px, 0)`;
+            }
         }
 
         if (scrollIndicator) {
@@ -303,96 +308,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const marqueeContent = document.querySelector('.marquee-content');
     const galleryImages = Array.from(marqueeContent.querySelectorAll('img'));
 
-    let isDragging = false;
-    let isUserInteracting = false;
-    let startX = 0;
-    let animationId = null;
-    let resumeTimeout = null;
-    const autoScrollSpeed = 0.9;
-
-    function getLoopWidth() {
-        return marqueeContent.scrollWidth / 2;
-    }
-
-    function animateMarquee() {
-        if (!isUserInteracting) {
-            marqueeContainer.scrollLeft += autoScrollSpeed;
-
-            const loopWidth = getLoopWidth();
-            if (marqueeContainer.scrollLeft >= loopWidth) {
-                marqueeContainer.scrollLeft -= loopWidth;
+    galleryImages.forEach((img) => {
+        img.addEventListener('click', () => {
+            const idx = galleryImages.indexOf(img);
+            if (idx > -1) {
+                openLightbox(idx % uniqueImages.length);
             }
-        }
-
-        animationId = requestAnimationFrame(animateMarquee);
-    }
-
-    setTimeout(() => {
-        animationId = requestAnimationFrame(animateMarquee);
-    }, 100);
-
-    function pauseAutoScroll() {
-        isUserInteracting = true;
-        clearTimeout(resumeTimeout);
-    }
-
-    function resumeAutoScroll() {
-        clearTimeout(resumeTimeout);
-        resumeTimeout = setTimeout(() => {
-            isUserInteracting = false;
-        }, 900);
-    }
-
-    let hasDragged = false;
-    let clickTarget = null;
-
-    marqueeContainer.addEventListener('pointerdown', (e) => {
-        pauseAutoScroll();
-        isDragging = true;
-        startX = e.clientX;
-        hasDragged = false;
-        clickTarget = e.target;
-        e.preventDefault();
-        marqueeContainer.setPointerCapture(e.pointerId);
-    });
-
-    marqueeContainer.addEventListener('pointermove', (e) => {
-        if (!isDragging || !marqueeContainer.hasPointerCapture(e.pointerId)) return;
-        e.preventDefault();
-        const deltaX = e.clientX - startX;
-        startX = e.clientX;
-        marqueeContainer.scrollLeft -= deltaX;
-
-        if (Math.abs(deltaX) > 5) {
-            hasDragged = true;
-        }
-    });
-
-    marqueeContainer.addEventListener('pointerup', (e) => {
-        if (isDragging) {
-            isDragging = false;
-            if (marqueeContainer.hasPointerCapture(e.pointerId)) {
-                marqueeContainer.releasePointerCapture(e.pointerId);
-            }
-            resumeAutoScroll();
-
-            if (!hasDragged && clickTarget && clickTarget.tagName.toLowerCase() === 'img') {
-                const idx = galleryImages.indexOf(clickTarget);
-                if (idx > -1) {
-                    openLightbox(idx % uniqueImages.length);
-                }
-            }
-        }
-    });
-
-    marqueeContainer.addEventListener('pointercancel', (e) => {
-        if (isDragging) {
-            isDragging = false;
-            if (marqueeContainer.hasPointerCapture(e.pointerId)) {
-                marqueeContainer.releasePointerCapture(e.pointerId);
-            }
-            resumeAutoScroll();
-        }
+        });
     });
 
     // Lightbox Logic
