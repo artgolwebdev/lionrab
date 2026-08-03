@@ -7,6 +7,16 @@
     <title>Neon | Tattoo Artist | Tel Aviv-Yaffo</title>
     <meta name="description"
         content="Neon is a tattoo artist based in Tel Aviv-Yaffo, specializing in custom black & grey tattoos inspired by dark fantasy and organic design.">
+    
+    <!-- SEO Meta Tags -->
+    <link rel="canonical" href="https://lionrab.ink/" />
+    <meta property="og:title" content="Neon | Custom Tattoo Artist in Tel Aviv" />
+    <meta property="og:description" content="Neon is a tattoo artist based in Tel Aviv-Yaffo, specializing in custom black & grey tattoos inspired by dark fantasy and organic design." />
+    <meta property="og:image" content="https://lionrab.ink/assets/hero.png" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://lionrab.ink/" />
+    <meta name="twitter:card" content="summary_large_image" />
+    
     <!-- Google Fonts: refined display and body pairing -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -25,6 +35,29 @@
     gtag('config', 'G-F43X7Z2QBC');
     </script>
 
+    <!-- Structured Data (JSON-LD) -->
+    <!-- NOTE: Update address with real street address when studio has public location -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "LocalBusiness",
+      "name": "Neon — Tattoo Artist",
+      "image": "https://lionrab.ink/assets/hero.png",
+      "url": "https://lionrab.ink",
+      "telephone": "+972525486738",
+      "priceRange": "$$",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Tel Aviv-Yaffo",
+        "addressCountry": "IL"
+      },
+      "sameAs": [
+        "https://www.instagram.com/lion_rab/"
+      ],
+      "description": "Neon is a custom tattoo artist based in Tel Aviv, specializing in black & grey tattoos inspired by dark fantasy and organic design."
+    }
+    </script>
+
 </head>
 
 <body>
@@ -40,7 +73,7 @@
 
     <!-- 1. Hero Section -->
     <section class="hero" id="hero">
-        <video class="hero-video" id="hero-bg-video" autoplay muted loop playsinline preload="metadata" poster="assets/images/1.jpg">
+        <video class="hero-video" id="hero-bg-video" autoplay muted loop playsinline preload="metadata" poster="assets/hero.png">
             <source src="assets/videos/1.mp4" type="video/mp4">
         </video>
         <div class="hero-overlay"></div>
@@ -48,8 +81,8 @@
         <div class="hero-content">
             <div class="hero-title-block">
                 <span class="hero-subtitle">Tattoo Artist</span>
-                <h1 class="hero-title">Neon</h1>
-                <span class="hero-tagline">Tel Aviv &middot;</span>
+                <h1 class="hero-title">Neon <br><span class="subtitle">— Tattoo in Tel Aviv</span></h1>
+                <span class="hero-tagline">Black &middot; Grey</span>
             </div>
         </div>
         <div class="scroll-indicator">
@@ -63,7 +96,7 @@
         <div class="about-content">
             <div class="about-text-block">
                 <span class="about-label">About</span>
-                <h2 class="about-headline">Custom Black &amp; Grey Tattoos</h2>
+                <h2 class="about-headline">Custom Black &amp; Grey Tattoos in Tel Aviv</h2>
                 <p class="about-bio">I'm Li On, a tattoo artist with over five years of experience, specializing in custom black &amp; grey tattoos inspired by dark fantasy and organic design. Every piece is created from scratch with a strong focus on body flow, composition, and longevity—designed to be both personal and timeless.</p>
                 <div class="about-features" aria-label="Artist specialties">
                     <div class="feature-card">
@@ -99,7 +132,7 @@
                 </div>
             </div>
             <div class="about-visual">
-                <img src="assets/hero.png" alt="Neon — Tattoo Artist" class="about-artist-img" loading="eager">
+                <img src="assets/hero.png" alt="Neon, custom tattoo artist in Tel Aviv" class="about-artist-img" loading="eager" width="1080" height="1080">
             </div>
         </div>
     </section>
@@ -109,25 +142,25 @@
         <div class="marquee-container">
             <div class="marquee-content">
                 <!-- Images will be duplicated for infinite scroll effect -->
-                <img src="assets/images/1.jpg" alt="Tattoo by Neon" loading="lazy">
-                <img src="assets/images/2.jpg" alt="Tattoo by Neon" loading="lazy">
-                <img src="assets/images/3.jpg" alt="Tattoo by Neon" loading="lazy">
-                <img src="assets/images/4.jpg" alt="Tattoo by Neon" loading="lazy">
-                <img src="assets/images/5.jpg" alt="Tattoo by Neon" loading="lazy">
-                <img src="assets/images/6.jpg" alt="Tattoo by Neon" loading="lazy">
-                <img src="assets/images/7.jpg" alt="Tattoo by Neon" loading="lazy">
-                <img src="assets/images/8.jpg" alt="Tattoo by Neon" loading="lazy">
-                <img src="assets/images/9.jpg" alt="Tattoo by Neon" loading="lazy">
+                <img src="assets/images/1.jpg" alt="Black and grey dark fantasy tattoo by Neon, Tel Aviv" loading="lazy" width="400" height="600">
+                <img src="assets/images/2.jpg" alt="Custom organic design tattoo, Tel Aviv tattoo artist" loading="lazy" width="400" height="600">
+                <img src="assets/images/3.jpg" alt="Fine line black and grey tattoo, Neon Tel Aviv" loading="lazy" width="400" height="600">
+                <img src="assets/images/4.jpg" alt="Custom sleeve tattoo design, Tel Aviv tattoo studio" loading="lazy" width="400" height="600">
+                <img src="assets/images/5.jpg" alt="Dark fantasy back piece tattoo, Tel Aviv artist Neon" loading="lazy" width="400" height="600">
+                <img src="assets/images/6.jpg" alt="Black and grey forearm tattoo, custom design Tel Aviv" loading="lazy" width="400" height="600">
+                <img src="assets/images/7.jpg" alt="Organic tattoo artwork, Neon tattoo artist Tel Aviv" loading="lazy" width="400" height="600">
+                <img src="assets/images/8.jpg" alt="Custom black and grey tattoo, Tel Aviv-Yaffo studio" loading="lazy" width="400" height="600">
+                <img src="assets/images/9.jpg" alt="Dark fantasy custom tattoo, Neon Tel Aviv artist" loading="lazy" width="400" height="600">
                 <!-- Duplicated for seamless loop -->
-                <img src="assets/images/1.jpg" alt="Tattoo by Neon" loading="lazy">
-                <img src="assets/images/2.jpg" alt="Tattoo by Neon" loading="lazy">
-                <img src="assets/images/3.jpg" alt="Tattoo by Neon" loading="lazy">
-                <img src="assets/images/4.jpg" alt="Tattoo by Neon" loading="lazy">
-                <img src="assets/images/5.jpg" alt="Tattoo by Neon" loading="lazy">
-                <img src="assets/images/6.jpg" alt="Tattoo by Neon" loading="lazy">
-                <img src="assets/images/7.jpg" alt="Tattoo by Neon" loading="lazy">
-                <img src="assets/images/8.jpg" alt="Tattoo by Neon" loading="lazy">
-                <img src="assets/images/9.jpg" alt="Tattoo by Neon" loading="lazy">
+                <img src="assets/images/1.jpg" alt="Black and grey dark fantasy tattoo by Neon, Tel Aviv" loading="lazy" width="400" height="600">
+                <img src="assets/images/2.jpg" alt="Custom organic design tattoo, Tel Aviv tattoo artist" loading="lazy" width="400" height="600">
+                <img src="assets/images/3.jpg" alt="Fine line black and grey tattoo, Neon Tel Aviv" loading="lazy" width="400" height="600">
+                <img src="assets/images/4.jpg" alt="Custom sleeve tattoo design, Tel Aviv tattoo studio" loading="lazy" width="400" height="600">
+                <img src="assets/images/5.jpg" alt="Dark fantasy back piece tattoo, Tel Aviv artist Neon" loading="lazy" width="400" height="600">
+                <img src="assets/images/6.jpg" alt="Black and grey forearm tattoo, custom design Tel Aviv" loading="lazy" width="400" height="600">
+                <img src="assets/images/7.jpg" alt="Organic tattoo artwork, Neon tattoo artist Tel Aviv" loading="lazy" width="400" height="600">
+                <img src="assets/images/8.jpg" alt="Custom black and grey tattoo, Tel Aviv-Yaffo studio" loading="lazy" width="400" height="600">
+                <img src="assets/images/9.jpg" alt="Dark fantasy custom tattoo, Neon Tel Aviv artist" loading="lazy" width="400" height="600">
             </div>
         </div>
     </section>
@@ -221,6 +254,89 @@
             </div>
         </div>
     </div>
+
+    <!-- Tattoo Studio Section -->
+    <section class="studio-section" id="studio">
+        <div class="container">
+            <div class="studio-content">
+                <span class="studio-label">Studio</span>
+                <h2 class="studio-headline">Tattoo Studio in Tel Aviv</h2>
+                <p class="studio-description">My tattoo studio in Tel Aviv-Yaffo specializes in black & grey tattoos, dark fantasy themes, and organic design techniques. I take a consultation-first approach to ensure every piece is tailored to your vision and anatomy. While I welcome walk-in consultations when possible, custom tattoo projects are typically scheduled by appointment to allow adequate design time. The studio is located in Eilat 22, Tel Aviv-Yaffo, providing a comfortable and professional environment for your tattoo experience.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq-section" id="faq">
+        <div class="container">
+            <div class="faq-content">
+                <span class="faq-label">FAQ</span>
+                <h2 class="faq-headline">Frequently Asked Questions</h2>
+                
+                <div class="faq-item">
+                    <details class="faq-details" open>
+                        <summary class="faq-summary">
+                            <h3 class="faq-question">Do you take walk-in clients or is it by appointment only?</h3>
+                        </summary>
+                        <div class="faq-answer">
+                            <p>I primarily work by appointment to ensure adequate time for custom design and consultation. However, I may accommodate walk-in consultations when my schedule allows. For the best experience and guaranteed availability, I recommend booking in advance.</p>
+                        </div>
+                    </details>
+                </div>
+                
+                <div class="faq-item">
+                    <details class="faq-details">
+                        <summary class="faq-summary">
+                            <h3 class="faq-question">How long does it take to get a custom tattoo design?</h3>
+                        </summary>
+                        <div class="faq-answer">
+                            <p>Design timelines vary based on complexity and scheduling. After our initial consultation, I typically provide custom designs within 1-2 weeks. Larger or more intricate pieces may require additional design time to ensure the artwork meets your expectations.</p>
+                        </div>
+                    </details>
+                </div>
+                
+                <div class="faq-item">
+                    <details class="faq-details">
+                        <summary class="faq-summary">
+                            <h3 class="faq-question">What tattoo styles do you specialize in?</h3>
+                        </summary>
+                        <div class="faq-answer">
+                            <p>I specialize in black & grey tattoos, with a focus on dark fantasy themes and organic design techniques. My work emphasizes body flow, composition, and longevity. Each piece is custom-designed to complement your individual anatomy and personal style.</p>
+                        </div>
+                    </details>
+                </div>
+                
+                <div class="faq-item">
+                    <details class="faq-details">
+                        <summary class="faq-summary">
+                            <h3 class="faq-question">How much does a custom tattoo cost in Tel Aviv?</h3>
+                        </summary>
+                        <div class="faq-answer">
+                            <p>Pricing depends on size, placement, detail level, and time required. I discuss specific pricing during consultations once I understand your design concept. This ensures accurate quotes based on the actual scope of your custom tattoo project.</p>
+                        </div>
+                    </details>
+                </div>
+                
+                <div class="faq-item">
+                    <details class="faq-details">
+                        <summary class="faq-summary">
+                            <h3 class="faq-question">Do you tattoo in English/for tourists visiting Tel Aviv?</h3>
+                        </summary>
+                        <div class="faq-answer">
+                            <p>Yes, I tattoo clients from all over the world and speak English fluently. Many of my clients are tourists visiting Tel Aviv. I'm happy to accommodate international visitors and can help coordinate scheduling around your travel plans.</p>
+                        </div>
+                    </details>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Site Footer Info -->
+    <footer class="site-footer-info">
+        <p>Neon — Custom Tattoo Artist</p>
+        <p>Tel Aviv-Yaffo, Israel</p>
+        <p>Phone: +972 52-548-6738</p>
+    </footer>
 
     <!-- 5. Footer -->
     <section class="contact-section" id="contact">

@@ -4,6 +4,51 @@ document.addEventListener('DOMContentLoaded', () => {
     const scrollIndicator = document.querySelector('.scroll-indicator');
     const heroVideo = document.getElementById('hero-bg-video');
 
+    // FAQ Accordion functionality with smooth height animation
+    const faqDetails = document.querySelectorAll('.faq-details');
+    
+    faqDetails.forEach((detail) => {
+        const answer = detail.querySelector('.faq-answer');
+        
+        detail.addEventListener('toggle', (e) => {
+            if (detail.open) {
+                // Set max-height to actual content height for smooth animation
+                setTimeout(() => {
+                    answer.style.maxHeight = answer.scrollHeight + 'px';
+                }, 10);
+                
+                // Close all other FAQ items
+                faqDetails.forEach((otherDetail) => {
+                    if (otherDetail !== detail && otherDetail.open) {
+                        const otherAnswer = otherDetail.querySelector('.faq-answer');
+                        otherAnswer.style.maxHeight = '0px';
+                        otherAnswer.style.opacity = '0';
+                        otherAnswer.style.paddingTop = '0';
+                        setTimeout(() => {
+                            otherDetail.removeAttribute('open');
+                            // Reset the closed item's styles
+                            otherAnswer.style.maxHeight = '';
+                            otherAnswer.style.opacity = '';
+                            otherAnswer.style.paddingTop = '';
+                        }, 400);
+                    }
+                });
+            } else {
+                // Collapse animation
+                answer.style.maxHeight = '0px';
+                answer.style.opacity = '0';
+                answer.style.paddingTop = '0';
+                
+                // Reset styles after animation completes
+                setTimeout(() => {
+                    answer.style.maxHeight = '';
+                    answer.style.opacity = '';
+                    answer.style.paddingTop = '';
+                }, 400);
+            }
+        });
+    });
+
     let ticking = false;
     const isTouchDevice = window.matchMedia('(pointer: coarse)').matches || window.innerWidth < 768;
 
