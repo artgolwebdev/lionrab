@@ -9,10 +9,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function updateHeroParallax() {
         const scrollY = window.scrollY || window.pageYOffset;
-        const maxTravel = isTouchDevice ? 70 : 120;
+        const maxTravel = isTouchDevice ? 80 : 60;
         const progress = Math.min(scrollY / window.innerHeight, 1);
-        const offset = Math.min(scrollY * (isTouchDevice ? 0.16 : 0.18), maxTravel);
-        const opacity = Math.max(0, 1 - progress * 0.95);
+        const offset = Math.min(scrollY * (isTouchDevice ? 0.35 : 0.15), maxTravel);
+        const opacity = Math.max(0, 1 - progress * 0.9);
 
         if (hero) {
             hero.style.setProperty('--hero-progress', progress.toString());
@@ -24,19 +24,18 @@ document.addEventListener('DOMContentLoaded', () => {
             heroContent.style.opacity = opacity.toString();
 
             if (titleBlock) {
-                titleBlock.style.transform = `translate3d(0, ${offset * (isTouchDevice ? 0.7 : 0.45)}px, 0)`;
+                titleBlock.style.transform = `translate3d(0, ${offset * 0.5}px, 0)`;
             }
         }
 
         if (scrollIndicator) {
-            scrollIndicator.style.transform = `translateX(-50%) translateY(${offset * 0.6}px)`;
+            scrollIndicator.style.transform = `translateX(-50%) translateY(${offset * 0.7}px)`;
             scrollIndicator.style.opacity = opacity.toString();
         }
 
-        if (heroVideo && !isTouchDevice) {
-            heroVideo.style.transform = `translate3d(0, ${scrollY * 0.08}px, 0)`;
-        } else if (heroVideo) {
-            heroVideo.style.transform = 'translate3d(0, 0, 0)';
+        // Remove video parallax completely to prevent layout breaking
+        if (heroVideo) {
+            heroVideo.style.transform = 'none';
         }
     }
 
@@ -58,14 +57,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const preloaderProgress = document.getElementById('preloader-progress');
 
     const assetsToLoad = [
-        { type: 'video', el: document.getElementById('hero-bg-video') },
-        { type: 'video', el: document.getElementById('hero-cv-1') },
-        { type: 'video', el: document.getElementById('hero-cv-2') },
-        { type: 'image', el: document.getElementById('hero-img') }
+        { type: 'video', el: document.getElementById('hero-bg-video') }
     ];
 
     let loadedCount = 0;
-    const totalAssets = assetsToLoad.length;
     let isLoaded = false;
 
     function finishLoading() {
@@ -79,9 +74,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function updatePreloaderProgress() {
         loadedCount++;
-        const percentage = (loadedCount / totalAssets) * 100;
+        const percentage = (loadedCount / assetsToLoad.length) * 100;
         if (preloaderProgress) preloaderProgress.style.width = `${percentage}%`;
-        if (loadedCount >= totalAssets) {
+        if (loadedCount >= assetsToLoad.length) {
             finishLoading();
         }
     }
@@ -121,11 +116,13 @@ document.addEventListener('DOMContentLoaded', () => {
     function openModal() {
         bookingModal.classList.add('active');
         document.body.style.overflow = 'hidden';
+        document.documentElement.style.overflow = 'hidden';
     }
 
     function closeModal() {
         bookingModal.classList.remove('active');
         document.body.style.overflow = '';
+        document.documentElement.style.overflow = '';
     }
 
     if (openModalBtn) {
