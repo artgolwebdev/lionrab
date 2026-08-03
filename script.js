@@ -1,4 +1,53 @@
 document.addEventListener('DOMContentLoaded', () => {
+    const hero = document.getElementById('hero');
+    const heroContent = document.querySelector('.hero-content');
+    const scrollIndicator = document.querySelector('.scroll-indicator');
+    const heroVideo = document.getElementById('hero-bg-video');
+
+    let ticking = false;
+    const isTouchDevice = window.matchMedia('(pointer: coarse)').matches || window.innerWidth < 768;
+
+    function updateHeroParallax() {
+        const scrollY = window.scrollY || window.pageYOffset;
+        const maxTravel = isTouchDevice ? 42 : 120;
+        const progress = Math.min(scrollY / window.innerHeight, 1);
+        const offset = Math.min(scrollY * (isTouchDevice ? 0.08 : 0.18), maxTravel);
+        const opacity = Math.max(0, 1 - progress * 0.95);
+
+        if (hero) {
+            hero.style.setProperty('--hero-progress', progress.toString());
+        }
+
+        if (heroContent) {
+            heroContent.style.transform = `translate3d(0, ${offset}px, 0)`;
+            heroContent.style.opacity = opacity.toString();
+        }
+
+        if (scrollIndicator) {
+            scrollIndicator.style.transform = `translateX(-50%) translateY(${offset * 0.6}px)`;
+            scrollIndicator.style.opacity = opacity.toString();
+        }
+
+        if (heroVideo && !isTouchDevice) {
+            heroVideo.style.transform = `translate3d(0, ${scrollY * 0.08}px, 0)`;
+        } else if (heroVideo) {
+            heroVideo.style.transform = 'translate3d(0, 0, 0)';
+        }
+    }
+
+    function onScroll() {
+        if (!ticking) {
+            window.requestAnimationFrame(() => {
+                updateHeroParallax();
+                ticking = false;
+            });
+            ticking = true;
+        }
+    }
+
+    updateHeroParallax();
+    window.addEventListener('scroll', onScroll, { passive: true });
+
     // --- Preloader Logic ---
     const preloader = document.getElementById('preloader');
     const preloaderProgress = document.getElementById('preloader-progress');
@@ -254,72 +303,65 @@ document.addEventListener('DOMContentLoaded', () => {
     const marqueeContent = document.querySelector('.marquee-content');
     const galleryImages = Array.from(marqueeContent.querySelectorAll('img'));
 
-    let currentTranslate = 0;
     let isDragging = false;
+    let isUserInteracting = false;
     let startX = 0;
-    let prevTranslate = 0;
     let animationId = null;
     let resumeTimeout = null;
-    let autoScrollSpeed = 1; // pixels per frame
+    const autoScrollSpeed = 0.9;
 
-    // The width of half the content is the loop point.
-    function getHalfWidth() {
+    function getLoopWidth() {
         return marqueeContent.scrollWidth / 2;
     }
 
     function animateMarquee() {
-        if (!isDragging) {
-            currentTranslate -= autoScrollSpeed;
+        if (!isUserInteracting) {
+            marqueeContainer.scrollLeft += autoScrollSpeed;
+
+            const loopWidth = getLoopWidth();
+            if (marqueeContainer.scrollLeft >= loopWidth) {
+                marqueeContainer.scrollLeft -= loopWidth;
+            }
         }
 
-        const halfWidth = getHalfWidth();
-
-        // Loop boundary checks
-        if (currentTranslate <= -halfWidth) {
-            currentTranslate += halfWidth;
-        } else if (currentTranslate > 0) {
-            currentTranslate -= halfWidth;
-        }
-
-        marqueeContent.style.transform = `translateX(${currentTranslate}px)`;
         animationId = requestAnimationFrame(animateMarquee);
     }
 
-    // Start auto-scroll
     setTimeout(() => {
         animationId = requestAnimationFrame(animateMarquee);
     }, 100);
 
     function pauseAutoScroll() {
-        isDragging = true;
+        isUserInteracting = true;
         clearTimeout(resumeTimeout);
     }
 
     function resumeAutoScroll() {
-        // We set dragging to false in the timeout to resume
         clearTimeout(resumeTimeout);
         resumeTimeout = setTimeout(() => {
-            isDragging = false;
-        }, 2000);
+            isUserInteracting = false;
+        }, 900);
     }
 
-    // Pointer events for dragging
     let hasDragged = false;
     let clickTarget = null;
 
     marqueeContainer.addEventListener('pointerdown', (e) => {
         pauseAutoScroll();
+        isDragging = true;
         startX = e.clientX;
-        prevTranslate = currentTranslate;
         hasDragged = false;
         clickTarget = e.target;
+        e.preventDefault();
         marqueeContainer.setPointerCapture(e.pointerId);
     });
 
     marqueeContainer.addEventListener('pointermove', (e) => {
         if (!isDragging || !marqueeContainer.hasPointerCapture(e.pointerId)) return;
+        e.preventDefault();
         const deltaX = e.clientX - startX;
-        currentTranslate = prevTranslate + deltaX;
+        startX = e.clientX;
+        marqueeContainer.scrollLeft -= deltaX;
 
         if (Math.abs(deltaX) > 5) {
             hasDragged = true;
@@ -328,10 +370,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     marqueeContainer.addEventListener('pointerup', (e) => {
         if (isDragging) {
-            marqueeContainer.releasePointerCapture(e.pointerId);
+            isDragging = false;
+            if (marqueeContainer.hasPointerCapture(e.pointerId)) {
+                marqueeContainer.releasePointerCapture(e.pointerId);
+            }
             resumeAutoScroll();
 
-            // Handle click/tap here because setPointerCapture suppresses native click events on children
             if (!hasDragged && clickTarget && clickTarget.tagName.toLowerCase() === 'img') {
                 const idx = galleryImages.indexOf(clickTarget);
                 if (idx > -1) {
@@ -343,7 +387,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     marqueeContainer.addEventListener('pointercancel', (e) => {
         if (isDragging) {
-            marqueeContainer.releasePointerCapture(e.pointerId);
+            isDragging = false;
+            if (marqueeContainer.hasPointerCapture(e.pointerId)) {
+                marqueeContainer.releasePointerCapture(e.pointerId);
+            }
             resumeAutoScroll();
         }
     });
