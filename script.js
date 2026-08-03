@@ -63,19 +63,33 @@ document.addEventListener('DOMContentLoaded', () => {
             hero.style.setProperty('--hero-progress', progress.toString());
         }
 
-        if (heroContent) {
-            const titleBlock = heroContent.querySelector('.hero-title-block');
-            heroContent.style.transform = `translate3d(0, ${offset}px, 0)`;
-            heroContent.style.opacity = opacity.toString();
+        // Skip parallax effects on mobile/touch devices
+        if (!isTouchDevice) {
+            if (heroContent) {
+                const titleBlock = heroContent.querySelector('.hero-title-block');
+                heroContent.style.transform = `translate3d(0, ${offset}px, 0)`;
+                heroContent.style.opacity = opacity.toString();
 
-            if (titleBlock) {
-                titleBlock.style.transform = `translate3d(0, ${offset * 0.5}px, 0)`;
+                if (titleBlock) {
+                    titleBlock.style.transform = `translate3d(0, ${offset * 0.5}px, 0)`;
+                }
             }
-        }
 
-        if (scrollIndicator) {
-            scrollIndicator.style.transform = `translateX(-50%) translateY(${offset * 0.7}px)`;
-            scrollIndicator.style.opacity = opacity.toString();
+            if (scrollIndicator) {
+                scrollIndicator.style.transform = `translateX(-50%) translateY(${offset * 0.7}px)`;
+                scrollIndicator.style.opacity = opacity.toString();
+            }
+        } else {
+            // On mobile, only apply fade effect without parallax movement
+            if (heroContent) {
+                heroContent.style.transform = 'none';
+                heroContent.style.opacity = opacity.toString();
+            }
+
+            if (scrollIndicator) {
+                scrollIndicator.style.transform = 'translateX(-50%)';
+                scrollIndicator.style.opacity = opacity.toString();
+            }
         }
 
         // Remove video parallax completely to prevent layout breaking
