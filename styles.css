@@ -6,9 +6,9 @@
     --border-color: rgba(255, 255, 255, 0.15);
 
     /* Typography */
-    --font-display: 'Cormorant Garamond', serif;
-    --font-secondary: 'Inter', sans-serif;
-    --font-body: 'Inter', sans-serif;
+    --font-display: 'Cormorant Garamond', 'Heebo', serif;
+    --font-secondary: 'Inter', 'Heebo', sans-serif;
+    --font-body: 'Inter', 'Heebo', sans-serif;
 
     /* Layout */
     --global-padding: 1.5rem;
@@ -107,7 +107,7 @@ video {
 .preloader-progress {
     position: absolute;
     top: 0;
-    left: 0;
+    inset-inline-start: 0;
     height: 100%;
     width: 0%;
     background-color: var(--accent-color);
@@ -155,9 +155,9 @@ video {
 .hero-content {
     position: absolute;
     z-index: 10;
-    left: clamp(1rem, 4vw, 4rem);
+    inset-inline-start: clamp(1rem, 4vw, 4rem);
     bottom: clamp(4rem, 10vh, 7rem);
-    text-align: left;
+    text-align: start;
     display: flex;
     align-items: flex-end;
     justify-content: flex-start;
@@ -169,8 +169,8 @@ video {
     flex-direction: column;
     align-items: flex-start;
     gap: 0.35rem;
-    border-left: 2px solid rgba(255, 255, 255, 0.95);
-    padding-left: 1.3rem;
+    border-inline-start: 2px solid rgba(255, 255, 255, 0.95);
+    padding-inline-start: 1.3rem;
 }
 
 .hero-subtitle {
@@ -202,7 +202,7 @@ video {
     text-transform: none;
     opacity: 0.6;
     display: inline;
-    margin-left: 0.3rem;
+    margin-inline-start: 0.3rem;
 }
 
 .hero-tagline {
@@ -294,12 +294,12 @@ video {
     z-index: 2;
     max-width: 700px;
     width: 100%;
-    text-align: left;
+    text-align: start;
 }
 
 .about-visual {
     position: absolute;
-    right: -4rem;
+    inset-inline-end: -4rem;
     bottom: -2rem;
     display: flex;
     justify-content: flex-end;
@@ -317,7 +317,7 @@ video {
     object-position: bottom right;
     filter: grayscale(100%) contrast(1.06);
     opacity: 0.98;
-    margin-left: auto;
+    margin-inline-start: auto;
     position: relative;
     bottom: -7px;
 }
@@ -348,7 +348,7 @@ video {
     font-size: clamp(1rem, 1.2vw, 1.14rem);
     line-height: 1.76;
     color: #d7d7d7;
-    text-align: left;
+    text-align: start;
     margin: 0;
     max-width: 60ch;
 }
@@ -438,7 +438,7 @@ video {
     font-size: clamp(1rem, 1.2vw, 1.14rem);
     line-height: 1.76;
     color: #d7d7d7;
-    text-align: left;
+    text-align: start;
     margin: 0;
 }
 
@@ -588,10 +588,10 @@ video {
     font-size: clamp(1rem, 1.15vw, 1.1rem);
     line-height: 1.8;
     color: rgba(245, 242, 235, 0.7);
-    text-align: left;
+    text-align: start;
     margin: 0;
     padding-top: 0;
-    padding-left: 0;
+    padding-inline-start: 0;
     max-height: 0;
     opacity: 0;
     overflow: hidden;
@@ -684,14 +684,14 @@ video {
     .hero-content {
         top: clamp(1.2rem, 4vw, 2rem);
         bottom: auto;
-        left: clamp(1rem, 5vw, 1.6rem);
-        right: 1rem;
+        inset-inline-start: clamp(1rem, 5vw, 1.6rem);
+        inset-inline-end: 1rem;
         align-items: flex-start;
         justify-content: flex-start;
     }
 
     .hero-title-block {
-        padding-left: 0.95rem;
+        padding-inline-start: 0.95rem;
         gap: 0.4rem;
     }
 
@@ -723,11 +723,11 @@ video {
 
     .about-text-block {
         max-width: 100%;
-        padding-right: 1rem;
+        padding-inline-end: 1rem;
     }
 
     .about-visual {
-        right: -1rem;
+        inset-inline-end: -1rem;
         bottom: -0.2rem;
         width: min(100%, 360px);
     }
@@ -786,10 +786,15 @@ video {
 
 .marquee-content {
     display: flex;
-    gap: 1rem;
-    padding: 0 1rem;
+    flex-shrink: 0;
     width: max-content;
+    padding: 0;
     will-change: transform;
+    animation: galleryMarquee 20s linear infinite;
+}
+
+[dir="rtl"] .marquee-content {
+    animation-name: galleryMarqueeRTL;
 }
 
 @keyframes galleryMarquee {
@@ -801,7 +806,23 @@ video {
     }
 }
 
-.marquee-content img {
+@keyframes galleryMarqueeRTL {
+    from {
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(50%);
+    }
+}
+
+.marquee-track {
+    display: flex;
+    gap: 1rem;
+    padding-inline-end: 1rem;
+    flex-shrink: 0;
+}
+
+.marquee-track img {
     height: clamp(220px, 30vw, 340px);
     width: auto;
     object-fit: cover;
@@ -812,14 +833,10 @@ video {
     border: 1px solid rgba(255, 255, 255, 0.12);
 }
 
-.marquee-content img:hover {
+.marquee-track img:hover {
     filter: grayscale(0%);
     transform: translateY(-4px) scale(1.02);
     box-shadow: 0 12px 28px rgba(0, 0, 0, 0.4);
-}
-
-.marquee-content {
-    animation: galleryMarquee 20s linear infinite;
 }
 
 @media (max-width: 768px) {
@@ -841,7 +858,11 @@ video {
         animation: galleryMarquee 25s linear infinite;
     }
 
-    .marquee-content img {
+    [dir="rtl"] .marquee-content {
+        animation: galleryMarqueeRTL 25s linear infinite;
+    }
+
+    .marquee-track img {
         height: clamp(180px, 25vw, 280px);
     }
 }
@@ -936,11 +957,11 @@ video {
     content: '';
     position: absolute;
     top: 0;
-    left: -100%;
+    inset-inline-start: -100%;
     width: 100%;
     height: 100%;
     background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
-    transition: left 0.6s ease;
+    transition: inset-inline-start 0.6s ease;
 }
 
 .booking-cta-btn:hover {
@@ -950,7 +971,7 @@ video {
 }
 
 .booking-cta-btn:hover::before {
-    left: 100%;
+    inset-inline-start: 100%;
 }
 
 /* ============================
@@ -987,14 +1008,14 @@ video {
     }
 
     .about-text-block {
-        padding-right: 0.3rem;
-        margin-left: 0;
+        padding-inline-end: 0.3rem;
+        margin-inline-start: 0;
         margin-bottom: 0;
     }
 
     .about-visual {
         position: absolute;
-        right: -0.8rem;
+        inset-inline-end: -0.8rem;
         bottom: -0.4rem;
         width: min(100%, 420px);
         justify-content: flex-end;
@@ -1031,7 +1052,7 @@ video {
 
     .modal-close {
         top: 1rem;
-        right: 1rem;
+        inset-inline-end: 1rem;
         font-size: 2.5rem;
     }
 
@@ -1084,7 +1105,7 @@ video {
 .modal-close {
     position: absolute;
     top: 2rem;
-    right: 2rem;
+    inset-inline-end: 2rem;
     background: transparent;
     border: none;
     color: var(--text-color);
@@ -1136,7 +1157,7 @@ video {
 .progress-indicator {
     position: absolute;
     top: 0;
-    left: 0;
+    inset-inline-start: 0;
     height: 100%;
     background-color: var(--accent-color);
     width: 25%;
@@ -1145,7 +1166,7 @@ video {
 }
 
 .progress-text-container {
-    text-align: right;
+    text-align: end;
     margin-bottom: 2rem;
 }
 
@@ -1396,6 +1417,41 @@ video {
     background: rgba(255, 255, 255, 0.08);
 }
 
+/* Language switcher */
+.lang-switch {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    margin-top: 1rem;
+    font-family: var(--font-secondary);
+    font-size: 0.85rem;
+    letter-spacing: 0.05em;
+}
+
+.lang-switch a,
+.lang-switch .lang-current {
+    padding: 0.2rem 0;
+    color: var(--text-color);
+    opacity: 0.7;
+    transition: opacity 0.2s ease, color 0.2s ease;
+}
+
+.lang-switch a:hover {
+    opacity: 1;
+    color: var(--accent-color);
+}
+
+.lang-switch .lang-current {
+    opacity: 1;
+    color: var(--accent-color);
+    border-bottom: 1px solid var(--accent-color);
+}
+
+.lang-switch span:not(.lang-current) {
+    opacity: 0.4;
+}
+
 /* ============================
    6. Global CTA
    ============================ */
@@ -1473,7 +1529,7 @@ video {
 .lightbox-close {
     position: absolute;
     top: 2rem;
-    right: 2rem;
+    inset-inline-end: 2rem;
     background: transparent;
     border: none;
     color: var(--text-color);
@@ -1507,11 +1563,11 @@ video {
 }
 
 .lightbox-prev {
-    left: 1rem;
+    inset-inline-start: 1rem;
 }
 
 .lightbox-next {
-    right: 1rem;
+    inset-inline-end: 1rem;
 }
 
 /* ============================
@@ -1520,7 +1576,7 @@ video {
 .cookie-banner {
     position: fixed;
     bottom: 1.5rem;
-    left: 1.5rem;
+    inset-inline-start: 1.5rem;
     max-width: 380px;
     width: calc(100% - 3rem);
     background: rgba(10, 10, 10, 0.92);
@@ -1577,4 +1633,77 @@ body.cta-visible .cookie-banner {
 
 .cookie-btn:hover {
     opacity: 0.9;
+}
+
+/* ============================
+   9. RTL / Hebrew adjustments
+   ============================ */
+html[lang="he"] {
+    --font-secondary: 'Heebo', sans-serif;
+    --font-body: 'Heebo', sans-serif;
+}
+
+/* Flip the About gradient for RTL so text reads against the darker side */
+[dir="rtl"] .about-strip::before {
+    background: linear-gradient(270deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.56) 48%, rgba(0,0,0,0.18) 100%);
+}
+
+/* Flip lightbox navigation arrows for RTL reading direction */
+[dir="rtl"] .lightbox-prev,
+[dir="rtl"] .lightbox-next {
+    transform: translateY(-50%) scaleX(-1);
+}
+
+/* Hebrew: tighten wide Latin-oriented letter-spacing */
+html[lang="he"] .hero-subtitle,
+html[lang="he"] .hero-tagline,
+html[lang="he"] .about-label,
+html[lang="he"] .studio-label,
+html[lang="he"] .faq-label,
+html[lang="he"] .feature-card span {
+    letter-spacing: 0.05em;
+}
+
+html[lang="he"] .hero-title .subtitle {
+    letter-spacing: 0.02em;
+    line-height: 1.2;
+}
+
+html[lang="he"] .section-title,
+html[lang="he"] .booking-cta-btn,
+html[lang="he"] .btn {
+    letter-spacing: 0.04em;
+}
+
+html[lang="he"] .contact-link,
+html[lang="he"] .instagram-btn,
+html[lang="he"] .footer-book-btn {
+    letter-spacing: 0.05em;
+}
+
+html[lang="he"] .chip,
+html[lang="he"] .progress-text,
+html[lang="he"] .form-step h3,
+html[lang="he"] .scroll-indicator span {
+    letter-spacing: 0.03em;
+}
+
+/* Hebrew: give display headings room for descenders/accents */
+html[lang="he"] .about-headline,
+html[lang="he"] .studio-headline,
+html[lang="he"] .faq-headline,
+html[lang="he"] .faq-question,
+html[lang="he"] .section-title,
+html[lang="he"] .modal-title {
+    line-height: 1.1;
+}
+
+html[lang="he"] .hero-title {
+    line-height: 0.85;
+}
+
+@media (max-width: 767px) {
+    html[lang="he"] .hero-title {
+        line-height: 0.8;
+    }
 }

@@ -348,7 +348,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Construct WhatsApp URL
         const phone = '972525486738';
-        const rawMessage = `Hi! I'm interested in a tattoo.\nPlacement: ${formData.placement}\nSize: ${formData.size}\nName: ${formData.name}`;
+        const isHebrew = document.documentElement.lang === 'he';
+        const rawMessage = isHebrew
+            ? `היי! אני מעוניין/ת בקעקוע.\nמיקום: ${formData.placement}\nגודל: ${formData.size}\nשם: ${formData.name}`
+            : `Hi! I'm interested in a tattoo.\nPlacement: ${formData.placement}\nSize: ${formData.size}\nName: ${formData.name}`;
         const encodedMessage = encodeURIComponent(rawMessage);
         const waUrl = `https://wa.me/${phone}?text=${encodedMessage}`;
 
@@ -459,7 +462,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (cookieBanner && cookieAcceptBtn) {
         // Show banner if consent hasn't been saved yet
-        if (!localStorage.getItem('sage_cookie_consent')) {
+        if (!localStorage.getItem('lionrab_cookie_consent')) {
             setTimeout(() => {
                 cookieBanner.classList.remove('hidden');
             }, 600);
@@ -467,7 +470,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         cookieAcceptBtn.addEventListener('click', () => {
             cookieBanner.classList.add('hidden');
-            localStorage.setItem('sage_cookie_consent', 'accepted');
+            localStorage.setItem('lionrab_cookie_consent', 'accepted');
         });
     }
 

@@ -4,6 +4,7 @@ A modern, dark-themed landing page for Neon, a tattoo artist based in Tel Aviv-Y
 
 ## Features
 
+- **Bilingual (Hebrew / English)**: Hebrew is the default locale at `/` with full RTL support; English lives at `/en/`. Footer language switcher links both versions.
 - **Hero Section**: Full-screen video background with parallax scrolling effect
 - **About Section**: Artist biography with feature cards highlighting specialties
 - **Gallery**: Infinite horizontal marquee showcasing tattoo work
@@ -17,21 +18,28 @@ A modern, dark-themed landing page for Neon, a tattoo artist based in Tel Aviv-Y
 - **HTML5**: Semantic markup structure
 - **CSS3**: Custom properties, animations, responsive design
 - **JavaScript (Vanilla)**: No frameworks, pure JS for interactivity
-- **Google Fonts**: Cormorant Garamond (display) and Inter (body)
+- **Google Fonts**: Cormorant Garamond (Latin display), Inter (Latin body), Heebo (Hebrew fallback)
 
 ## Project Structure
 
 ```
 lionrab-lp/
-├── index.html          # Main HTML structure
-├── styles.css          # All styling and responsive breakpoints
+├── index.html          # Hebrew homepage (RTL, default at /)
+├── en/
+│   └── index.html      # English homepage (LTR at /en/)
+├── styles.css          # All styling and responsive breakpoints (RTL-safe logical properties)
 ├── script.js           # Interactive functionality
 ├── assets/
-│   ├── images/         # Gallery images and static assets
+│   ├── images/         # Gallery images (WebP)
 │   ├── videos/         # Hero background video
-│   ├── hero.png        # Artist portrait
-│   └── about.png       # Additional artist image
+│   ├── hero.png        # Artist portrait / social share image
+│   ├── hero.webp       # Hero video poster
+│   └── about.webp      # About section artist image
 ├── CNAME               # Custom domain configuration
+├── sitemap.xml         # Sitemap with hreflang alternates (he/en)
+├── robots.txt          # Points crawlers to the sitemap
+├── favicon.png         # Site icon
+├── apple-touch-icon.png # iOS home-screen icon
 └── README.md           # Project documentation
 ```
 
@@ -50,11 +58,12 @@ lionrab-lp/
 - Gradient overlay for readability
 
 ### Gallery Section
-- Infinite horizontal marquee animation
-- 18 images (9 unique, duplicated for seamless loop)
+- Infinite horizontal marquee animation built from two identical tracks (9 unique WebP images each) for a seamless ±50% loop
+- RTL-mirrored animation for the Hebrew locale (`galleryMarqueeRTL` drifts right, LTR drifts left)
 - Hover effects (grayscale to color, lift effect)
 - Touch-optimized scrolling on mobile
 - Custom scrollbar hiding
+- Lightbox with prev/next navigation and keyboard/arrow support (RTL-aware arrows)
 
 ### Booking System
 - Multi-step form (Placement → Size → Contact → Confirmation)
@@ -71,9 +80,9 @@ lionrab-lp/
     --text-color: #f5f2eb;
     --accent-color: #e9e1d3;
     --border-color: rgba(255, 255, 255, 0.15);
-    --font-display: 'Cormorant Garamond', serif;
-    --font-secondary: 'Inter', sans-serif;
-    --font-body: 'Inter', sans-serif;
+    --font-display: 'Cormorant Garamond', 'Heebo', serif;
+    --font-secondary: 'Inter', 'Heebo', sans-serif;
+    --font-body: 'Inter', 'Heebo', sans-serif;
     --global-padding: 1.5rem;
     --max-width: 1180px;
     --cta-height: 70px;
@@ -116,6 +125,8 @@ lionrab-lp/
 ## Performance Optimizations
 
 - Lazy loading for gallery images
+- Gallery images converted to WebP (~0.4 MB total, down from 21.4 MB JPGs)
+- Hero video compressed to ~900 KB H.264 (down from 86.7 MB)
 - Video preload="metadata"
 - CSS will-change hints for animated elements
 - Passive scroll event listeners
@@ -141,6 +152,14 @@ The site is configured for GitHub Pages or similar static hosting:
 - Static assets in assets/ directory
 - No build process required
 - Simply upload files to any static hosting service
+
+### Search Console
+
+After deploying, submit both URLs in Google Search Console:
+- `https://lionrab.ink/` (Hebrew)
+- `https://lionrab.ink/en/` (English)
+
+Both pages declare `hreflang` alternates and a shared sitemap (`sitemap.xml`) with `xhtml:link` alternates, so Google can map the two locales automatically.
 
 ## Customization
 
@@ -169,12 +188,10 @@ Edit CSS custom properties in `:root` selector in styles.css
 ## Future Enhancements
 
 Potential improvements:
-- Image lightbox for gallery
-- Contact form integration
+- Contact form backend integration
 - Social media links
 - Client testimonials section
-- FAQ section
-- Multiple language support
+- FAQ content expansion
 
 ## License
 
